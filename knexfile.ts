@@ -3,7 +3,7 @@ require ('custom-env').env('staging')
 
 const config: { [key: string]: Knex.Config } = {
   development: {
-    client: "mysql",
+    client: "mysql2",
     connection: {
       host: process.env.DB_HOST,
       port: 3306,
@@ -14,6 +14,10 @@ const config: { [key: string]: Knex.Config } = {
     migrations: {
       directory: `${__dirname}/src/database/migrations`
     },
+    seeds: {
+      directory: `${__dirname}/src/database/seeds`
+    },
+    useNullAsDefault: true
   },
 };
 

@@ -1,3 +1,4 @@
+import knex from '../config/database';
 interface IUser {
   name: String;
   age: Number;
@@ -5,9 +6,12 @@ interface IUser {
 }
 
 export class UserDatabase {
-  static async InsertUser({ name, age, role }: IUser): Promise<void> {
+  static async InsertUser({ name, age, role }: IUser) {
     try {
-      console.log(name, age, role);
+      const result = await knex('users').insert({
+        name, age, role
+      })
+      return result
     } catch (error: any) {
       Promise.reject(new Error(error));
     }

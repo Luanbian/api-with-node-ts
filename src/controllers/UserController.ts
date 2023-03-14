@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserDatabase } from "../../database/UserDatabase";
+import { UserDatabase } from "../database/UserDatabase";
 
 export class UserController{
 
