@@ -35,6 +35,13 @@ function App() {
     })
   }
 
+  function deleteUser(e:any) {
+    e.preventDefault();
+    axios.delete(`${baseURL}/deleteUser/${id}`).then((response) => {
+      console.log(response)
+    })
+  }
+
   useEffect(() => {
     axios.get(`${baseURL}/`).then((response) => {
       setList(response.data.result);
@@ -117,6 +124,17 @@ function App() {
           onChange={(e) => setRole(e.target.value)}
         />
         <input type="submit" value="Update" />
+      </form>
+      <br />
+      <h1>Delete</h1>
+      <form onSubmit={deleteUser}>
+        <label>Id</label>
+        <input
+          type="text"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+        />
+        <input type="submit" value="delete" />
       </form>
     </>
   );
