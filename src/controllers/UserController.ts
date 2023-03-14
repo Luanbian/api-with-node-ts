@@ -4,9 +4,12 @@ import { UserDatabase } from "../database/UserDatabase";
 export class UserController{
 
   static async users(req:Request, res:Response) {
-    return res.json({
-      response: 'Hello World'
-    });
+    try {
+      const result = await UserDatabase.listUsers()
+      res.status(200).json({result})
+    } catch (error: any) {
+      res.status(404).json({message: 'not found'})
+    }
   }
 
   static async newUser(req:Request, res:Response) {

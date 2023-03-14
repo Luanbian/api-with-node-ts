@@ -18,6 +18,17 @@ export class UserDatabase {
     }
   }
 
+  static async listUsers() {
+    try {
+      const result = await knex.select(
+        'id', 'name', 'age', 'role'
+      ).from('users')
+      return result
+    } catch (error: any) {
+      Promise.reject(new Error(error))
+    }
+  }
+
   static async updateUser(id: number, {name, age, role}: IUser) {
     try {
       const result = await knex('users').update({
