@@ -1,8 +1,6 @@
 import type { Knex } from "knex";
 require ('custom-env').env('staging')
 
-// Update with your config settings.
-
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: "mysql",
