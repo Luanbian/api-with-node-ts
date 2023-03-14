@@ -7,7 +7,7 @@ export class UserController{
     try {
       const result = await UserDatabase.listUsers()
       res.status(200).json({result})
-    } catch (error: any) {
+    } catch (error) {
       res.status(404).json({message: 'not found'})
     }
   }
@@ -18,7 +18,7 @@ export class UserController{
       const age = +req.body.age
       await UserDatabase.InsertUser({name, age, role})
       res.status(202).json({message: 'created'})
-    } catch (error: any) {
+    } catch (error) {
       res.status(400).json(new Error(error))
     }
   }
@@ -28,7 +28,7 @@ export class UserController{
       const {id, age, name, role} = req.body
       await UserDatabase.updateUser(id, {name, age, role})
       res.status(200).json({message: 'ok'})
-    } catch (error: any) {
+    } catch (error) {
       res.status(400).json(new Error(error))
     }
   }
@@ -38,7 +38,7 @@ export class UserController{
       const id = +req.params.id
       await UserDatabase.deleteUser(id)
       res.status(200).json({message: 'ok'})
-    } catch (error: any) {
+    } catch (error) {
       res.status(400).json(new Error(error))
     }
   }

@@ -10,60 +10,57 @@ interface IUser {
   role: String;
 }
 
-interface IProps {
-  list: IUser[];
-}
+const ListOfUsers: React.FC = () => {
+  const [list, setList] = useState<IUser[] | null>();
+  useEffect(() => {
+    axios.get(`${baseURL}/users`).then((response) => {
+      setList(response.data.result);
+    });
+  }, []);
+  return (
+    <>
+      {list?.map((item) => (
+        <div key={item.id.toString()}>
+          <ul>
+            <li>id:{item.id}</li>
+            <li>nome: {item.name}</li>
+            <li>age: {item.age}</li>
+            <li>função: {item.role}</li>
+          </ul>
+        </div>
+      ))}
+    </>
+  );
+};
 
 function App() {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [role, setRole] = useState("");
-  const [list, setList] = useState(null || []);
 
-  function createUser(e: any) {
+  function createUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    axios.post(`${baseURL}/newUser`, { name, age, role }).then((response) => {
+    axios.post(`${baseURL}/users`, { name, age, role }).then((response) => {
       console.log(response.data);
     });
   }
 
-  function updateUser(e:any) {
+  function updateUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    axios.put(`${baseURL}/updateUser`, {id, name, age, role}).then((response) => {
-      console.log(response)
-    })
+    axios
+      .put(`${baseURL}/users`, { id, name, age, role })
+      .then((response) => {
+        console.log(response);
+      });
   }
 
-  function deleteUser(e:any) {
+  function deleteUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    axios.delete(`${baseURL}/deleteUser/${id}`).then((response) => {
-      console.log(response)
-    })
-  }
-
-  useEffect(() => {
-    axios.get(`${baseURL}/`).then((response) => {
-      setList(response.data.result);
+    axios.delete(`${baseURL}/users/${id}`).then((response) => {
+      console.log(response);
     });
-  }, []);
-
-  const ListOfUsers: React.FC<IProps> = ({ list }) => {
-    return (
-      <>
-        {list.map((item) => (
-          <div key={item.id.toString()}>
-            <ul>
-              <li>id:{item.id}</li>
-              <li>nome: {item.name}</li>
-              <li>age: {item.age}</li>
-              <li>função: {item.role}</li>
-            </ul>
-          </div>
-        ))}
-      </>
-    );
-  };
+  }
 
   return (
     <>
@@ -95,18 +92,14 @@ function App() {
       <br />
 
       <h1>Read</h1>
-      <ListOfUsers list={list} />
+      <ListOfUsers />
 
-      <br/>
+      <br />
 
       <h1>Update</h1>
       <form onSubmit={updateUser}>
         <label>Id</label>
-        <input
-          type="text"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-        />
+        <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
         <label>Nome</label>
         <input
           type="text"
@@ -135,14 +128,9 @@ function App() {
       <h1>Delete</h1>
       <form onSubmit={deleteUser}>
         <label>Id</label>
-        <input
-          type="text"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-        />
+        <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
         <input type="submit" value="delete" />
       </form>
-      
     </>
   );
 }

@@ -13,7 +13,7 @@ export class UserDatabase {
         name, age, role
       })
       return result
-    } catch (error: any) {
+    } catch (error) {
       Promise.reject(new Error(error));
     }
   }
@@ -24,7 +24,7 @@ export class UserDatabase {
         'id', 'name', 'age', 'role'
       ).from('users')
       return result
-    } catch (error: any) {
+    } catch (error) {
       Promise.reject(new Error(error))
     }
   }
@@ -35,7 +35,7 @@ export class UserDatabase {
         name, age, role
       }).where('id',id)
       return result
-    } catch(error: any) {
+    } catch(error) {
       Promise.reject(new Error(error))
     }
   }
@@ -44,7 +44,7 @@ export class UserDatabase {
     try {
       const result = await knex('users').delete().where('id', id)
       return result
-    } catch (error: any) {
+    } catch (error) {
       Promise.reject(new Error(error))
     }
   }
