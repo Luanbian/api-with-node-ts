@@ -29,7 +29,7 @@ export class UserDatabase {
     }
   }
 
-  static async updateUser(id: number, {name, age, role}: IUser) {
+  static async updateUser(id:string , {name, age, role}: IUser) {
     try {
       const result = await knex('users').update({
         name, age, role

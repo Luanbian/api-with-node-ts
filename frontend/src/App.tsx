@@ -49,7 +49,7 @@ function App() {
   function updateUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     axios
-      .put(`${baseURL}/users`, { id, name, age, role })
+      .put(`${baseURL}/users/${id}`, { name, age, role })
       .then((response) => {
         console.log(response);
       });

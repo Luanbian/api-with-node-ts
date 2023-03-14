@@ -25,7 +25,8 @@ export class UserController{
 
   static async updateUser(req: Request, res: Response) {
     try {
-      const {id, age, name, role} = req.body
+      const {age, name, role} = req.body
+      const id = req.params.id
       await UserDatabase.updateUser(id, {name, age, role})
       res.status(200).json({message: 'ok'})
     } catch (error) {
