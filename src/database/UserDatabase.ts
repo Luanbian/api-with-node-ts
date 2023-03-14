@@ -6,6 +6,7 @@ interface IUser {
 }
 
 export class UserDatabase {
+
   static async InsertUser({ name, age, role }: IUser) {
     try {
       const result = await knex('users').insert({
@@ -14,6 +15,17 @@ export class UserDatabase {
       return result
     } catch (error: any) {
       Promise.reject(new Error(error));
+    }
+  }
+
+  static async updateUser(id: number, {name, age, role}: IUser) {
+    try {
+      const result = await knex('users').update({
+        name, age, role
+      }).where('id',id)
+      return result
+    } catch(error: any) {
+      Promise.reject(new Error(error))
     }
   }
 }

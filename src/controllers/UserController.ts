@@ -19,4 +19,16 @@ export class UserController{
       res.status(400).json(new Error(error))
     }
   }
+
+  static async updateUser(req: Request, res: Response) {
+    try {
+      const {name, role} = req.body
+      const age = +req.body.age
+      const id = +req.params.id
+      await UserDatabase.updateUser(id, {name, age, role})
+      res.status(200).json({message: 'ok'})
+    } catch (error: any) {
+      res.status(400).json(new Error(error))
+    }
+  }
 }
