@@ -91,10 +91,14 @@ function App() {
         />
         <input type="submit" value="Create" />
       </form>
+
       <br />
+
       <h1>Read</h1>
       <ListOfUsers list={list} />
+
       <br/>
+
       <h1>Update</h1>
       <form onSubmit={updateUser}>
         <label>Id</label>
@@ -125,7 +129,9 @@ function App() {
         />
         <input type="submit" value="Update" />
       </form>
+
       <br />
+
       <h1>Delete</h1>
       <form onSubmit={deleteUser}>
         <label>Id</label>
@@ -136,6 +142,7 @@ function App() {
         />
         <input type="submit" value="delete" />
       </form>
+      
     </>
   );
 }
