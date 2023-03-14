@@ -28,4 +28,13 @@ export class UserDatabase {
       Promise.reject(new Error(error))
     }
   }
+
+  static async deleteUser(id: number) {
+    try {
+      const result = await knex('users').delete().where('id', id)
+      return result
+    } catch (error: any) {
+      Promise.reject(new Error(error))
+    }
+  }
 }

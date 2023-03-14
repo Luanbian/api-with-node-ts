@@ -31,4 +31,14 @@ export class UserController{
       res.status(400).json(new Error(error))
     }
   }
+
+  static async deleteUser (req: Request, res: Response) {
+    try {
+      const id = +req.params.id
+      await UserDatabase.deleteUser(id)
+      res.status(200).json({message: 'ok'})
+    } catch (error: any) {
+      res.status(400).json(new Error(error))
+    }
+  }
 }
