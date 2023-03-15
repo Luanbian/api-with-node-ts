@@ -1,5 +1,5 @@
 import express from "express";
-import { router } from "../routes/router";
+import { router } from "./src/routes/router";
 import cors from 'cors';
 
 export class App{
@@ -20,3 +20,4 @@ export class App{
     this.server.use(router);
   }
 }
+new App().server.listen(8080);
