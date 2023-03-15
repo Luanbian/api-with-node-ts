@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { UserController } from "../controllers/UserController";
+import { makeUserController } from "../app/factories";
 
 const router: Router = Router()
+const userController = makeUserController()
 
 //Routes
-router.post("/users", UserController.newUser);
-router.get("/users", UserController.users);
-router.put("/users/:id", UserController.updateUser);
-router.delete("/users/:id", UserController.deleteUser);
+router.post("/users", userController.newUser);
+router.get("/users", userController.users);
+router.put("/users/:id", userController.updateUser);
+router.delete("/users/:id", userController.deleteUser);
 
 export { router };

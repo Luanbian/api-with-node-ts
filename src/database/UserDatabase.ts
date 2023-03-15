@@ -1,13 +1,9 @@
 import knex from '../config/database';
-interface IUser {
-  name: String;
-  age: Number;
-  role: String;
-}
+import { IUserDatabase, IUser } from '../interfaces/Interfaces';
 
-export class UserDatabase {
+export class UserDatabase implements IUserDatabase{
 
-  static async InsertUser({ name, age, role }: IUser) {
+  async InsertUser({ name, age, role }: IUser):Promise<number[] | undefined> {
     try {
       const result = await knex('users').insert({
         name, age, role
@@ -18,7 +14,7 @@ export class UserDatabase {
     }
   }
 
-  static async listUsers() {
+  async listUsers():Promise<any[] | undefined> {
     try {
       const result = await knex.select(
         'id', 'name', 'age', 'role'
@@ -29,7 +25,7 @@ export class UserDatabase {
     }
   }
 
-  static async updateUser(id:string , {name, age, role}: IUser) {
+  async updateUser(id:string , {name, age, role}: IUser) {
     try {
       const result = await knex('users').update({
         name, age, role
@@ -40,7 +36,7 @@ export class UserDatabase {
     }
   }
 
-  static async deleteUser(id: number) {
+  async deleteUser(id: number) {
     try {
       const result = await knex('users').delete().where('id', id)
       return result
