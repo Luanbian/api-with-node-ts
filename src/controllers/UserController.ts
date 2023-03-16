@@ -1,52 +1,61 @@
-import { Request, Response } from "express";
-import { IUserDatabase } from "../interfaces/Interfaces";
+import {
+  IUserDatabase,
+  IUserController,
+  IHttpRequest,
+  IUserInput,
+  IHttpsResponse,
+  IUserOutput,
+} from "../interfaces/Interfaces";
 
-export class UserController{
-  private userDatabase: IUserDatabase
+export class UserController implements IUserController {
+  private userDatabase: IUserDatabase;
 
-  constructor(userDatabase:IUserDatabase) {
-    this.userDatabase = userDatabase
+  constructor(userDatabase: IUserDatabase) {
+    this.userDatabase = userDatabase;
   }
 
-  
-  async users(req:Request, res:Response) {
-    try {
-      const result = await this.userDatabase.listUsers()
-      res.status(200).json({result})
-    } catch (error) {
-      res.status(404).json({message: 'not found'})
-    }
+  async users(): Promise<IHttpsResponse<IUserOutput>> {
+    const Users = await this.userDatabase.listUsers();
+    return {
+      statusCode: 200,
+      message: Users,
+    };
   }
 
-  async newUser(req:Request, res:Response) {
-    try {
-      const {name, role} = req.body
-      const age = +req.body.age
-      await this.userDatabase.InsertUser({name, age, role})
-      res.status(202).json({message: 'created'})
-    } catch (error) {
-      res.status(400).json(new Error(error))
-    }
+  async newUser(req: IHttpRequest<IUserInput>): Promise<IHttpsResponse<IUserOutput>> {
+    const UserId = await this.userDatabase.InsertUser({
+      name: req.body.name,
+      age: req.body.age,
+      role: req.body.role,
+    });
+    return {
+      statusCode: 201,
+      message: "created",
+      data: { id: UserId },
+    };
   }
 
-  async updateUser(req: Request, res: Response) {
-    try {
-      const {age, name, role} = req.body
-      const id = req.params.id
-      await this.userDatabase.updateUser(id, {name, age, role})
-      res.status(200).json({message: 'ok'})
-    } catch (error) {
-      res.status(400).json(new Error(error))
-    }
+  async updateUser(req: IHttpRequest<IUserInput>): Promise<IHttpsResponse<IUserOutput>> {
+    const UserId = await this.userDatabase.updateUser({
+      id: req.params.id,
+      name: req.body.name,
+      age: req.body.age,
+      role: req.body.role,
+    });
+    return {
+      statusCode: 200,
+      message: "updated",
+      data: { id: UserId },
+    };
   }
 
-  async deleteUser (req: Request, res: Response) {
-    try {
-      const id = +req.params.id
-      await this.userDatabase.deleteUser(id)
-      res.status(200).json({message: 'ok'})
-    } catch (error) {
-      res.status(400).json(new Error(error))
-    }
+  async deleteUser(req: IHttpRequest<IUserInput>): Promise<IHttpsResponse<IUserOutput>> {
+    const id = req.params.id || "";
+    const UserId = await this.userDatabase.deleteUser(id);
+    return {
+      statusCode: 200,
+      message: "deleted",
+      data: { id: UserId },
+    };
   }
 }
