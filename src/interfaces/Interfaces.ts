@@ -5,9 +5,20 @@ export interface IUser {
   role?: string;
 }
 
-export interface IHttpRequest<T = any> {
-  body: T;
-  params: T;
+export interface IHttpRequest<B = any, P = any> {
+  body: B;
+  params: P;
+}
+
+export interface IinputUpdateUser {
+  input?: any; //refact
+  inputId?: any // refact
+}
+
+export interface IinputNewUser {
+  name: string,
+  age: number,
+  role: string
 }
 
 export interface IHttpsResponse<T = any> {
@@ -19,13 +30,6 @@ export interface IHttpsResponse<T = any> {
 export type HttpHandler<Request = any, Response = any> = (
   request: IHttpRequest
 ) => Promise<IHttpsResponse>;
-
-export interface IUserInput {
-  id?: string;
-  name?: string;
-  age?: number;
-  role?: string;
-}
 
 export interface IUserOutput {
   id?: number[] | number;
@@ -39,8 +43,8 @@ export interface IUserDatabase {
 }
 
 export interface IUserController {
-  newUser: HttpHandler<IUserInput, IUserOutput>;
-  users: HttpHandler<IUserOutput>;
-  updateUser: HttpHandler<IUserInput, IUserOutput>;
-  deleteUser: HttpHandler<IUserInput, IUserOutput>;
+  newUser(input: IinputNewUser):Promise<IHttpsResponse<IUserOutput>>;
+  users():Promise<IHttpsResponse<IUserOutput>>;
+  updateUser({input, inputId}: IinputUpdateUser):Promise<IHttpsResponse<IUserOutput>>;
+  deleteUser(inputId: string):Promise<IHttpsResponse<IUserOutput>>;
 }

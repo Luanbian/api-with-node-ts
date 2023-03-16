@@ -1,10 +1,10 @@
 import {
   IUserDatabase,
   IUserController,
-  IHttpRequest,
-  IUserInput,
   IHttpsResponse,
   IUserOutput,
+  IinputNewUser,
+  IinputUpdateUser,
 } from "../interfaces/Interfaces";
 
 export class UserController implements IUserController {
@@ -22,11 +22,11 @@ export class UserController implements IUserController {
     };
   }
 
-  async newUser(req: IHttpRequest<IUserInput>): Promise<IHttpsResponse<IUserOutput>> {
+  async newUser(input: IinputNewUser): Promise<IHttpsResponse<IUserOutput>> {
     const UserId = await this.userDatabase.InsertUser({
-      name: req.body.name,
-      age: req.body.age,
-      role: req.body.role,
+      name: input.name,
+      age: input.age,
+      role: input.role,
     });
     return {
       statusCode: 201,
@@ -35,12 +35,12 @@ export class UserController implements IUserController {
     };
   }
 
-  async updateUser(req: IHttpRequest<IUserInput>): Promise<IHttpsResponse<IUserOutput>> {
+  async updateUser({input, inputId}: IinputUpdateUser): Promise<IHttpsResponse<IUserOutput>> {
     const UserId = await this.userDatabase.updateUser({
-      id: req.params.id,
-      name: req.body.name,
-      age: req.body.age,
-      role: req.body.role,
+      id: inputId.id,
+      name: input.name,
+      age: input.age,
+      role: input.role,
     });
     return {
       statusCode: 200,
@@ -49,9 +49,8 @@ export class UserController implements IUserController {
     };
   }
 
-  async deleteUser(req: IHttpRequest<IUserInput>): Promise<IHttpsResponse<IUserOutput>> {
-    const id = req.params.id || "";
-    const UserId = await this.userDatabase.deleteUser(id);
+  async deleteUser(inputId: string): Promise<IHttpsResponse<IUserOutput>> {
+    const UserId = await this.userDatabase.deleteUser(inputId);
     return {
       statusCode: 200,
       message: "deleted",
