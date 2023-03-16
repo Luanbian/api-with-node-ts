@@ -1,5 +1,5 @@
 import { makeUserController } from "../app/factories";
-import fastify, {FastifyInstance, FastifyRequest, FastifyReply} from "fastify";
+import fastify, {FastifyInstance} from "fastify";
 import { IHttpRequest } from "../interfaces/Interfaces";
 const userController = makeUserController()
 
