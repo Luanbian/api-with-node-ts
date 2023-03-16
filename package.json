@@ -2,7 +2,7 @@
   "name": "api-simple",
   "version": "1.0.0",
   "description": "api with node and ts",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "start:dev": "nodemon",
     "build": "npx tsc"
