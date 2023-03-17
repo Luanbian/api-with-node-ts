@@ -11,8 +11,14 @@ export interface IHttpRequest<B = any, P = any> {
 }
 
 export interface IinputUpdateUser {
-  input?: any; //refact
-  inputId?: any // refact
+  input: {
+    name: string,
+    age: number,
+    role: string
+  };
+  inputId: {
+    id: string
+  }
 }
 
 export interface IinputNewUser {

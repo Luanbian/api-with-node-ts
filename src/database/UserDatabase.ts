@@ -25,7 +25,7 @@ export class UserDatabase implements IUserDatabase{
     }
   }
 
-  async updateUser({id, name, age, role}: IUser) {
+  async updateUser({id, name, age, role}: IUser):Promise<number | undefined>{
     try {
       const result = await knex('users').update({
         name, age, role
@@ -36,7 +36,7 @@ export class UserDatabase implements IUserDatabase{
     }
   }
 
-  async deleteUser(id: string | undefined) {
+  async deleteUser(id: string | undefined):Promise<number | undefined>{
     try {
       const result = await knex('users').delete().where('id', id)
       return result

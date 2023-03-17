@@ -23,7 +23,8 @@ function routes() {
   router.put("/users/:id", (req: FastifyRequest) => {
     const input = UserSchema.parse(req.body);
     const inputId = IdSchema.parse(req.params);
-    return userController.updateUser({ input, inputId });
+    const inputUpdate = {input, inputId}
+    return userController.updateUser(inputUpdate);
   });
   router.delete("/users/:id", (req: FastifyRequest) => {
     const inputId = IdSchema.parse(req.params);

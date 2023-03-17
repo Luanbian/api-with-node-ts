@@ -5,6 +5,7 @@ import {
   IUserOutput,
   IinputNewUser,
   IinputUpdateUser,
+  IUser,
 } from "../interfaces/Interfaces";
 
 export class UserController implements IUserController {
@@ -35,12 +36,12 @@ export class UserController implements IUserController {
     };
   }
 
-  async updateUser({input, inputId}: IinputUpdateUser): Promise<IHttpsResponse<IUserOutput>> {
+  async updateUser(inputUpdate: IinputUpdateUser): Promise<IHttpsResponse<IUserOutput>> {
     const UserId = await this.userDatabase.updateUser({
-      id: inputId.id,
-      name: input.name,
-      age: input.age,
-      role: input.role,
+      id: inputUpdate.inputId.id,
+      name: inputUpdate.input.name,
+      age: inputUpdate.input.age,
+      role: inputUpdate.input.role,
     });
     return {
       statusCode: 200,
