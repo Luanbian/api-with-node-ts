@@ -14,7 +14,7 @@ const ListOfUsers: React.FC = () => {
   const [list, setList] = useState<IUser[] | null>();
   useEffect(() => {
     axios.get(`${baseURL}/users`).then((response) => {
-      setList(response.data.result);
+      setList(response.data.message);
     });
   }, []);
   return (

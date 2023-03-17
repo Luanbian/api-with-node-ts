@@ -1,5 +1,5 @@
 import { makeUserController } from "../app/factories";
-import fastify, { FastifyInstance, FastifyRequest } from "fastify";
+import { FastifyInstance, FastifyRequest } from "fastify";
 import { z } from "zod";
 const userController = makeUserController();
 
@@ -13,8 +13,7 @@ const IdSchema = z.object({
   id: z.string(),
 });
 
-const router: FastifyInstance = fastify();
-function routes() {
+export async function routes(router: FastifyInstance) {
   router.post("/users", (req: FastifyRequest) => {
     const inputUser = UserSchema.parse(req.body);
     return userController.newUser(inputUser);
@@ -32,4 +31,3 @@ function routes() {
   });
   return router;
 }
-module.exports = routes;
