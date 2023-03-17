@@ -10,13 +10,19 @@ describe("update an existing user by Id", () => {
       age: 44,
       role: "Luan",
     };
-    const inputId = 17
-    await expect(userController.updateUser({ input, inputId })).resolves.toEqual({
+    const inputId = { id: '15' }
+    const inputUpdate = {
+      id: inputId.id,
+      name: input.name,
+      age: input.age,
+      role: input.role
+    }
+    await expect(userController.updateUser({input, inputId})).resolves.toEqual({
       statusCode: 200,
       message: "updated",
       data: { id: [ 1 ] },
     })
     expect(updateUserMock).toHaveBeenCalledOnce()
-    expect(updateUserMock).toHaveBeenCalledWith(input) // refact
+    expect(updateUserMock).toHaveBeenCalledWith(inputUpdate)
   });
 });
